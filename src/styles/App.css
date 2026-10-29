@@ -1,0 +1,481 @@
+:root {
+  --amarillo: #f0dd86;
+  --vino: #5b1a2e;
+  --vino-oscuro: #2e1018;
+  --verde-oscuro: #283b02;
+  --bs-body-bg: var(--vino-oscuro);
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--vino-oscuro); }
+
+/* Menú fijo sobre la página: fondo vino al 60 % y texto #F0DD86 */
+
+/* Zona invisible en el borde superior que detecta el cursor */
+.dock-trigger-zone {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px; /* Área sensible al borde superior */
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+}
+
+/* Contenedor flotante general */
+.dock-container {
+  position: absolute;
+  top: 15px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 15px;
+  
+  /* ESTADO OCULTO: Se esconde hacia arriba y es transparente */
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ESTADO VISIBLE: Aparece cuando el cursor entra en la zona superior */
+.dock-trigger-zone:hover .dock-container {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Barra flotante estilo React Bits Dock */
+.dock-navbar {
+  background: rgba(46, 16, 24, 0.9); /* Fondo --vino-oscuro translúcido */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(240, 221, 134, 0.3); /* Borde amarillo sutil */
+  border-radius: 999px;
+  padding: 8px 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(240, 221, 134, 0.1);
+}
+
+/* Contenedor interno de los elementos */
+.dock-items {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Enlaces y botones del Dock */
+.dock-item, 
+.dock-navbar .btn-contacto-link {
+  color: var(--amarillo) !important;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Efecto hover en cada elemento individual del dock */
+.dock-item:hover, 
+.dock-navbar .btn-contacto-link:hover {
+  background: rgba(240, 221, 134, 0.15);
+  transform: translateY(2px) scale(1.05);
+  text-shadow: 0 0 8px rgba(240, 221, 134, 0.5);
+}
+
+/* Botón destacado "Leer textos" */
+.dock-btn-textos {
+  background-color: var(--amarillo) !important;
+  color: var(--vino-oscuro) !important;
+  font-weight: 600;
+  border: none !important;
+  padding: 6px 16px !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.dock-btn-textos:hover {
+  transform: translateY(2px) scale(1.05);
+  box-shadow: 0 0 12px var(--amarillo);
+}
+
+.barra-menu {
+  --bs-navbar-color: var(--amarillo);
+  --bs-navbar-hover-color: var(--amarillo);
+  --bs-navbar-active-color: var(--amarillo);
+  --bs-navbar-brand-color: var(--amarillo);
+  --bs-navbar-brand-hover-color: var(--amarillo);
+  background: rgba(46, 16, 24, 0.9);
+  color: var(--amarillo)
+}
+.barra-menu .nav-link:hover,
+.barra-menu .nav-link:focus { text-decoration: underline; }
+
+.barra-menu .nav-link{
+  --bs-btn-color: var(--amarillo);
+  --bs-btn-hover-color: var(--amarillo);
+  --bs-btn-active-color: var(--amarillo);
+  color: var(--amarillo);
+  text-align: left;
+}
+
+.btn-menu {
+  color: var(--amarillo) !important;
+  border-color: var(--amarillo) !important;
+  background-color: transparent !important;
+  transition: all 0.3s ease;
+}
+
+.btn-menu:hover {
+  background-color: var(--amarillo) !important;
+  color: var(--vino-oscuro) !important;
+  border-color: var(--amarillo) !important;
+}
+ 
+/* Fondo y colores principales del contenedor del modal */
+.modal-contacto {
+  background-color: var(--vino-oscuro) !important;
+  color: var(--amarillo) !important;
+  border: 1px solid var(--amarillo);
+}
+
+/* Encabezado, títulos, párrafos y etiquetas */
+.modal-contacto .modal-header,
+.modal-contacto .modal-title,
+.modal-contacto .form-label,
+.modal-contacto p,
+.modal-contacto label {
+  color: var(--amarillo) !important;
+  border-bottom-color: rgba(240, 221, 134, 0.2) !important;
+}
+
+/* Entradas de texto, select y textarea */
+.modal-contacto .form-control,
+.modal-contacto .form-select {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  color: var(--amarillo) !important;
+  border-color: var(--amarillo) !important;
+}
+
+/* Opciones desplegables del Select */
+.modal-contacto .form-select option {
+  background-color: var(--vino-oscuro) !important;
+  color: var(--amarillo) !important;
+}
+
+/* Botón de envío personalizado */
+.modal-contacto .btn-menu {
+  color: var(--amarillo) !important;
+  border: 1px solid var(--amarillo) !important;
+  background-color: transparent !important;
+  transition: all 0.3s ease;
+}
+
+.modal-contacto .btn-menu:hover {
+  background-color: var(--amarillo) !important;
+  color: var(--vino-oscuro) !important;
+}
+
+/* Panel lateral (Offcanvas) con la estética oscura y detalles amarillos */
+.offcanvas-oscuro {
+  background-color: var(--vino-oscuro) !important;
+  color: var(--amarillo) !important;
+}
+
+.offcanvas-oscuro .offcanvas-header,
+.offcanvas-oscuro .offcanvas-title,
+.offcanvas-oscuro p,
+.offcanvas-oscuro h3 {
+  color: var(--amarillo) !important;
+}
+
+.offcanvas-oscuro .offcanvas-header {
+  border-bottom: 1px solid rgba(240, 221, 134, 0.2);
+}
+
+.btn-menu {
+  --bs-btn-color: var(--amarillo);
+  --bs-btn-border-color: var(--amarillo);
+  --bs-btn-hover-color: var(--vino-oscuro);
+  --bs-btn-hover-bg: var(--amarillo);
+  --bs-btn-hover-border-color: var(--amarillo);
+  --bs-btn-active-color: var(--vino-oscuro);
+  --bs-btn-active-bg: var(--amarillo);
+  --bs-btn-active-border-color: var(--amarillo);
+}
+.barra-menu .navbar-toggler { border-color: var(--amarillo); }
+.barra-menu .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23F0DD86' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Lienzo: las 6 mesas de Illustrator apiladas (1920 x 6480). Todo se coloca en % y escala con el ancho. */
+.lienzo {
+  position: relative;
+  width: 100%;
+  max-width: 2200px;
+  margin: 0 auto;
+  aspect-ratio: 1920 / 6480;
+  overflow: hidden;
+  container-type: inline-size;
+  background: var(--vino-oscuro);
+}
+
+/* Todo lo que va sobre el lienzo se posiciona de forma absoluta */
+.capa,
+.capa-svg,
+.estrellita,
+.texto,
+.pie-lienzo,
+.ancla,
+.gato-zona,
+.gato-aviso {
+  position: absolute;
+  
+}
+
+.decay-card-img {
+  will-change: transform;
+  cursor: pointer;
+}
+
+.decay-card-img.is-active {
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.8));
+}
+
+/* Contenedor del efecto Halftone Reveal para los gatos */
+.halftone-reveal-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+/* Patrón de puntos de semitono (Halftone) mucho más visible */
+.halftone-reveal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  
+  /* Puntos amarillos más grandes (puedes ajustar el 42% y el tamaño 24px) */
+  background-image: radial-gradient(var(--amarillo) 42%, transparent 43%);
+  background-size: 22px 22px; /* 👈 Tamaño de la retícula de puntos más grande y notorio */
+  background-position: center;
+  
+  /* Círculo de revelación más amplio alrededor del cursor (220px) */
+  mask-image: radial-gradient(
+    circle 220px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    black 0%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle 220px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    black 0%,
+    transparent 100%
+  );
+  
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* Al pasar el cursor, el efecto se vuelve completamente intenso y notorio */
+.halftone-reveal-card.is-active::before {
+  opacity: 1; /* 👈 Opacidad al máximo para que resalte sin dudas */
+}
+
+/* Realce de brillo y zoom en la ilustración del gato al pasar el cursor */
+.halftone-reveal-card .halftone-image {
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.halftone-reveal-card.is-active .halftone-image {
+  filter: brightness(1.2) contrast(1.15); /* 👈 Más brillo y contraste */
+  transform: scale(1.04); /* 👈 Ligero zoom dinámico */
+}
+
+.capa { max-width: none; display: block; pointer-events: none; user-select: none; }
+.capa-svg { inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.capa-svg text { font-family: 'Caesar Dressing', cursive; }
+
+.texto {
+  margin: 0;
+  text-align: center;
+  font-family: 'Caesar Dressing', cursive;
+  pointer-events: none;
+}
+.texto span { display: block; white-space: nowrap; }
+
+.estrellita {
+  background: var(--amarillo);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* Franja del pie: la original tiene un degradado de transparente a mauve */
+.pie-lienzo {
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(141, 103, 113, 0.25), rgba(141, 103, 113, 0.63) 30%, #8d6771 45%);
+}
+.pie-texto {
+  color: var(--vino-oscuro);
+  font-family: Candara,  
+}
+
+.ancla { left: 0; width: 1px; height: 1px; scroll-margin-top: 64px; }
+
+/* Zona clicable del gato de la portada */
+.gato-zona {
+  background: transparent;
+  border: 0;
+  border-radius: 40%;
+}
+.gato-zona:hover,
+.gato-zona:focus-visible { outline: 0px dashed var(--amarillo); }
+
+/* Letrero: pequeño, centrado abajo y visible solo al pasar el cursor por el gato */
+.gato-aviso {
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: var(--amarillo);
+  color: var(--vino-oscuro);
+  padding: 0.2em 0.8em;
+  border-radius: 999px;
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.gato-zona:hover + .gato-aviso,
+.gato-zona:focus-visible + .gato-aviso { opacity: 1; }
+
+/* Contenedor principal del efecto Orbit */
+.orbit-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Anillo invisible que gira */
+.orbit-ring {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  animation: orbitRotate 25s linear infinite;
+}
+
+/* Si el mouse está encima, la órbita frena suavemente para que los elijas */
+.orbit-ring.paused {
+  animation-play-state: paused;
+}
+
+/* Posicionamiento de cada logo individual en el círculo usando trigonometría CSS */
+.orbit-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  margin-top: -40px;
+  margin-left: -40px;
+  transform: rotate(var(--angle)) translate(180px) rotate(calc(-1 * var(--angle)));
+  transition: transform 0.3s ease;
+}
+
+/* Efecto al pasar el cursor sobre un logo específico de la órbita */
+.orbit-item:hover {
+  transform: rotate(var(--angle)) translate(195px) rotate(calc(-1 * var(--angle))) scale(1.25);
+  z-index: 10;
+}
+
+.orbit-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* Animación continua de rotación */
+@keyframes orbitRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Núcleo central sutil con toque amarillo */
+.orbit-core {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: var(--amarillo);
+  border-radius: 50%;
+  box-shadow: 0 0 20px var(--amarillo);
+  opacity: 0.6;
+}
+
+/* Contenedor principal sin fondos y con desvanecimiento en los bordes */
+.holo-card {
+  position: absolute;
+  perspective: 1000px;
+  cursor: pointer;
+  z-index: 5;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  
+  /* Máscara para que los bordes del cuadro transparente se difuminen por completo */
+  mask-image: radial-gradient(circle at center, black 60%, transparent 95%);
+  -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 95%);
+}
+
+.holo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.1s ease-out;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  background: transparent !important;
+}
+
+/* Capa del brillo holográfico integrada suavemente */
+.holo-effect {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  
+  /* Brillo concentrado en el cursor que se difumina antes de llegar a los bordes */
+  background: radial-gradient(
+    circle 150px at var(--x, 50%) var(--y, 50%),
+    rgba(240, 221, 134, 0.7) 0%,
+    rgba(154, 165, 102, 0.25) 50%,
+    transparent 80%
+  );
+}
+
+.holo-card:hover .holo-effect {
+  opacity: 1;
+}
+
+.holo-card:hover .holo-image {
+  filter: brightness(1.12) contrast(1.08);
+}
+
+
