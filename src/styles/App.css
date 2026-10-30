@@ -326,7 +326,6 @@ body { background: var(--vino-oscuro); }
 }
 .pie-texto {
   color: var(--vino-oscuro);
-  font-family: Candara,  
 }
 
 .ancla { left: 0; width: 1px; height: 1px; scroll-margin-top: 64px; }
@@ -478,4 +477,115 @@ body { background: var(--vino-oscuro); }
   filter: brightness(1.12) contrast(1.08);
 }
 
+/* Contenedor estático y fijo en la parte superior */
+.dock-fixed-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+  pointer-events: none;
+}
 
+.dock-fixed-wrapper .dock-container {
+  position: relative;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  pointer-events: auto !important;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 15px;
+}
+
+.card-swap-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  perspective: 1000px;
+  user-select: none;
+}
+
+.card-swap-track {
+  position: relative;
+  width: 85%;
+  height: 80%;
+  transform-style: preserve-3d;
+}
+
+.card-swap-item {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #2e1018;
+  border: 2px solid rgba(240, 221, 134, 0.4);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card-swap-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-swap-title {
+  position: absolute;
+  bottom: 0;
+  inset-x: 0;
+  padding: 12px;
+  background: linear-gradient(transparent, rgba(46, 16, 24, 0.95));
+  color: #f0dd86;
+  font-family: inherit;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.card-swap-item.card-front {
+  transform: translateZ(0px) scale(1) translateY(0);
+  z-index: 3;
+  opacity: 1;
+  filter: brightness(1);
+}
+
+.card-swap-item.card-middle {
+  transform: translateZ(-50px) scale(0.93) translateY(18px);
+  z-index: 2;
+  opacity: 0.85;
+  filter: brightness(0.85);
+}
+
+.card-swap-item.card-back {
+  transform: translateZ(-100px) scale(0.86) translateY(36px);
+  z-index: 1;
+  opacity: 0.7;
+  filter: brightness(0.7);
+}
+
+.card-swap-item.card-hidden {
+  transform: translateZ(-150px) scale(0.8) translateY(50px);
+  z-index: 0;
+  opacity: 0;
+}
+
+.card-swap-hint {
+  position: absolute;
+  bottom: 5px;
+  font-size: 0.75rem;
+  color: #f0dd86;
+  opacity: 0.7;
+  pointer-events: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

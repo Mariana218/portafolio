@@ -4,7 +4,7 @@ import '../styles/App.css'
 
 export default function Navegacion({ onContacto, onTextos }) {
   return (
-    <div className="dock-trigger-zone">
+    <div className="dock-fixed-wrapper">
       <div className="dock-container">
         <nav className="dock-navbar">
           <div className="dock-items">
@@ -14,7 +14,7 @@ export default function Navegacion({ onContacto, onTextos }) {
               </a>
             ))}
             
-            <button className="dock-item btn-contacto-link" onClick={onContacto}>
+            <button type="button" className="dock-item btn-contacto-link" onClick={onContacto}>
               Contacto
             </button>
 

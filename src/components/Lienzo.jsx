@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   ANCHO, ALTO, capas, estrellitas, bloques, curvas,
   pieLienzo, gatoZona, gatoAviso, anclas,
@@ -7,6 +6,7 @@ import {
 import { pie } from '../data/contenido.js'
 import BlurText from './BlurText.jsx'
 import OrbitLogos from './OrbitLogos'
+import CardSwap from './CardSwap.jsx'
 import '../styles/App.css'
 
 const px = (v) => `${(v / ANCHO) * 100}%`
@@ -15,9 +15,6 @@ const fuente = (size) => `${(size / ANCHO) * 100}cqw`
 
 export default function Lienzo({ onGatoClick }) {
   const [halftoneCoord, setHalftoneCoord] = useState({ x: 50, y: 50, active: false })
-
-  // Estados para el efecto Holo Card en estrellas y títulos
-  const [holoCoords, setHoloCoords] = useState({ x: 50, y: 50, active: false })
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -30,12 +27,11 @@ export default function Lienzo({ onGatoClick }) {
     setHalftoneCoord((prev) => ({ ...prev, active: false }))
   }
 
-  // Manejador para el movimiento holográfico
+  // Manejador para el movimiento holográfico en 3D
   const handleHoloMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect()
     const x = ((e.clientX - rect.left) / rect.width) * 100
     const y = ((e.clientY - rect.top) / rect.height) * 100
-    // Calculamos inclinación en grados (-15deg a 15deg)
     const rx = -((e.clientY - rect.top) / rect.height - 0.5) * 30
     const ry = ((e.clientX - rect.left) / rect.width - 0.5) * 30
 
@@ -52,13 +48,34 @@ export default function Lienzo({ onGatoClick }) {
         <span key={id} id={id} className="ancla" style={{ top: py(y) }} />
       ))}
 
-      {/* Capas (Gatos, Fondos, Estrellas y Títulos) */}
+      {/* Capas (Gatos, Fondos, Estrellas, Títulos y Galería con Card Swap) */}
       {capas.map((c) => {
         const esGato = c.id.includes('gato') || c.src.includes('gato')
         const esEstrella = c.id.includes('estrella')
         const esTitulo = c.id.includes('titulo')
+        const esGaleria = c.id === 'galeria'
 
-        // 1. Efecto Halftone para los Gatos
+        // 1. Reemplazo de la capa "galería" por Card Swap de React Bits
+        if (esGaleria) {
+          return (
+            <div
+              key={c.id}
+              style={{
+                position: 'absolute',
+                left: px(c.x),
+                top: py(c.y),
+                width: px(c.w),
+                height: py(c.h),
+                pointerEvents: 'auto',
+                zIndex: 6,
+              }}
+            >
+              <CardSwap />
+            </div>
+          )
+        }
+
+        // 2. Efecto Halftone para los Gatos
         if (esGato) {
           return (
             <div
@@ -81,7 +98,7 @@ export default function Lienzo({ onGatoClick }) {
           )
         }
 
-        // 2. Efecto Holo Card para Estrellas y Títulos
+        // 3. Efecto Holo Card para Estrellas y Títulos
         if (esEstrella || esTitulo) {
           return (
             <div
@@ -102,7 +119,7 @@ export default function Lienzo({ onGatoClick }) {
           )
         }
 
-        // Resto de capas normales (fondos, olas, flores, galería)
+        // Resto de capas normales (fondos, olas, flores)
         return (
           <img
             key={c.id}
@@ -183,16 +200,6 @@ export default function Lienzo({ onGatoClick }) {
           ))}
         </div>
       ))}
-
-      {/* Pie de página */}
-      <div className="pie-lienzo" style={{ top: py(pieLienzo.y), height: py(pieLienzo.h) }} />
-      <p className="texto pie-texto" style={{ left: px(1017 - 700), width: px(1400), top: py(6323), fontSize: fuente(36), lineHeight: 1.2 }}>
-        {pie.copyright}
-      </p>
-      <p className="texto pie-texto" style={{ left: px(1001 - 700), width: px(1400), top: py(6382), fontSize: fuente(48), lineHeight: 1.2 }}>
-        {pie.credito}
-      </p>
-
       {/* Zona invisible del gato para abrir el contacto */}
       <button
         type="button"
@@ -208,36 +215,15 @@ export default function Lienzo({ onGatoClick }) {
         Pulsa el gato para contactarme
       </span>
 
-<svg className="capa-svg" viewBox={`0 0 ${ANCHO} ${ALTO}`} preserveAspectRatio="none" aria-hidden="true">
-  {curvas.map((c) => (
-    <g key={c.id}>
-      <path id={`ruta-${c.id}`} d={c.camino} fill="none" />
-      {[
-        { color: c.oscuro, mover: [0, 0] },
-        { color: c.claro, mover: c.desplazo },
-      ].map((capa, i) => (
-        <text
-          key={i}
-          fontSize={c.size}
-          fill={capa.color}
-          transform={`translate(${capa.mover[0]} ${capa.mover[1]})`}
-        >
-          {/* Usamos startOffset dinámico o dejamos que la animación CSS maneje el bucle */}
-          <textPath 
-            href={`#ruta-${c.id}`} 
-            textLength={c.largo} 
-            lengthAdjust="spacing"
-            startOffset="0%"
-          >
-            {c.texto}
-          </textPath>
-        </text>
-      ))}
-    </g>
-  ))}
-</svg>
-
-      
+      {/* Pie de página */}
+      <div className="pie-lienzo" style={{ top: py(pieLienzo.y), height: py(pieLienzo.h) }} />
+      <p className="mt-4 texto pie-texto" style={{ left: px(1017 - 700), width: px(1400), top: py(6260), fontSize: fuente(30), lineHeight: 1.2 }}>
+        {pie.copyright}
+      </p>
+      <p className="mt-4 texto pie-texto" style={{ left: px(1001 - 700), width: px(1400), top: py(6310), fontSize: fuente(50), lineHeight: 1.2 }}>
+        {pie.credito}
+      </p>
     </div>
+
   )
 }

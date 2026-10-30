@@ -13,12 +13,11 @@ export const areasInteres = ['Diseño', 'Web', 'Multimedia', 'Otro']
 // Cada bloque es una lista de líneas, tal como se ven en el diseño.
 export const textos = {
   encabezado: 'PORTAFOLIO',
-  lema: 'CREAMOS MUNDOS ORDENADOS PARA DARLE SENTIDO A NUESTRO CAOS INTERNO',
+  lema: 'CREAMOS MUNDOS DESORDENADOS PARA DARLE SENTIDO A NUESTRO CAOS INTERNO',
   proceso1: ['Mi proceso creativo', 'siempre ha sido', 'caótico...'],
   proceso2: ['Pero como productora', 'de multimedia, aprendí', 'a darle un orden'],
   proceso3: ['Modelar, programar y', 'editar se convirtieron', 'en una fortaleza'],
-  presumir: 'Y NO ES POR PRESUMIR PERO... h',
-  proyecto: 'Apoe!',
+  presumir: 'Y NO ES POR PRESUMIR PERO...     ..',
   declaracion1: [
     'Detrás de cada interfaz limpia, de cada',
     'animación fluida y de cada ilustración hay',
